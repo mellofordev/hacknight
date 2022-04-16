@@ -65,7 +65,6 @@ but as the hackathon ends this is my project (it was fun debugging twitter api )
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * Reactnative
 * Expo
@@ -111,14 +110,6 @@ To get started you need to have a Twitter account which is signed up with Twitte
 
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
