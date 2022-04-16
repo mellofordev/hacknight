@@ -1,12 +1,14 @@
 import React,{ useEffect } from 'react';
-import {StyleSheet, Text, View,ActivityIndicator,ScrollView,Image,FlatList} from 'react-native';
+import {StyleSheet, Text, View,ActivityIndicator,TextInput,Image,FlatList,Dimensions} from 'react-native';
 import env from '../env'
 export default function MediaComponent(){
     const bearerToken = env.btoken.toString();
     const [Data,setData]=React.useState([]);
     const [loading,setLoading]=React.useState(true);
+    const [text,setText]=React.useState('elonmusk');
+    const width_ =Dimensions.get('window').width;
     const apiRequest=()=>{
-    fetch('https://api.twitter.com/2/tweets/search/recent?query=tiktok&expansions=attachments.media_keys&media.fields=url',{
+    fetch(`https://api.twitter.com/2/tweets/search/recent?query=${text}&expansions=attachments.media_keys&media.fields=url&max_results=100`,{
         method:'GET',
         headers:{
         
@@ -24,10 +26,13 @@ export default function MediaComponent(){
     }
     useEffect(()=>{
     apiRequest();
-    },[])   
+    },[text])   
     return(
         <View style={styles.container}>
-        {loading==true ? <ActivityIndicator color={'black'} /> :(
+        <View style={{marginBottom:5,width:width_}}>
+            <TextInput placeholder='search topic...' onChangeText={(text)=>{setText(text)}} style={{height:50,width:'100%',backgroundColor:'#D3D3D3',borderRadius:15,marginLeft:5,marginRight:5}}/>
+        </View>    
+         {loading==true ? <ActivityIndicator color={'black'} /> :(
             <FlatList 
              data={Data}
              keyExtractor={(item)=>{item.media_key.toString()}}
@@ -37,7 +42,11 @@ export default function MediaComponent(){
                    <View style={{flexDirection:'column'}} > 
                     <Text>{item.item.type}</Text>
                      
-                    {item.item.type!="video" &&  <Image source={{uri:item.item.url}} style={{height:550,width:350,resizeMode:'contain'}}/>}
+                    {item.item.type!="video" && 
+                    <View style={{justifyContent:'center',alignItems:'center'}}> 
+                    <Image source={{uri:item.item.url}} style={{height:550,width:350,resizeMode:'contain'}}/>
+                    </View>
+                    }
                   </View>
                );
              }}
