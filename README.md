@@ -49,7 +49,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
+<div align="center" >
+  <div  style="display: flex; align-items: flex-start;flex-direction:column;">
+    <img src="/Screenshot_1650128543.png" width="200px"</img>
+    <img src="/Screenshot_1650128586.png" width="200px"</img>
+    <img src="/Screenshot_1650128625.png" width="200px"</img>
+  </div> 
+</div>
 
 To be frank i didnt get any cool ideas to build with twitter api ! <br>
 but i noticed that people who logged out of twitter have restrictions in viewing images or media's of a user ,so i thought about building an app which will be fetching images from a topic or twitter trends without logging in. It's like a ripped of client version of twitte with just images !. 
@@ -78,8 +84,7 @@ but as the hackathon ends this is my project (it was fun debugging twitter api )
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+
 
 ### Prerequisites
 
