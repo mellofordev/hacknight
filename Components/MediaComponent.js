@@ -1,5 +1,5 @@
 import React,{ useEffect } from 'react';
-import {StyleSheet, Text, View,ActivityIndicator,TextInput,Image,FlatList,Dimensions} from 'react-native';
+import {StyleSheet, Text, View,ActivityIndicator,TextInput,Image,FlatList,Dimensions,TouchableOpacity,Divider} from 'react-native';
 import env from '../env'
 export default function MediaComponent(){
     const bearerToken = env.btoken.toString();
@@ -18,7 +18,7 @@ export default function MediaComponent(){
     })
     .then(response=>response.json())
     .then(data=>{
-        console.log(data.data);
+    
         setData(data.includes.media);
         setLoading(false);
     })
@@ -33,26 +33,38 @@ export default function MediaComponent(){
             <TextInput placeholder='search topic...' onChangeText={(text)=>{setText(text)}} style={{height:50,width:'100%',backgroundColor:'#D3D3D3',borderRadius:15,marginLeft:5,marginRight:5}}/>
         </View>    
          {loading==true ? <ActivityIndicator color={'black'} /> :(
+             <View>
             <FlatList 
              data={Data}
              keyExtractor={(item)=>{item.media_key.toString()}}
+             ListFooterComponent={()=>{
+                 return(
+                <View style={{marginBottom:100}}>
+                    <Text style={{fontSize:24,textAlign:'center'}}>the end.</Text>
+                </View>
+                 );
+             }}
              renderItem={(item)=>{
-                 console.log(item.item);
+              
                return(
                    <View style={{flexDirection:'column'}} > 
-                    <Text>{item.item.type}</Text>
-                     
                     {item.item.type!="video" && 
-                    <View style={{justifyContent:'center',alignItems:'center'}}> 
-                    <Image source={{uri:item.item.url}} style={{height:550,width:350,resizeMode:'contain'}}/>
+                    <View> 
+                    <Image source={{uri:item.item.url}} style={{height:550,width:width_,resizeMode:'contain',justifyContent:'center',alignItems:'center'}}/>
+                    <TouchableOpacity><Text style={{textAlign:'left'}}>Download</Text></TouchableOpacity>
+                    <View style={{borderBottomWidth:StyleSheet.hairlineWidth,borderBottomColor:'gray'}}></View>
                     </View>
+                    
                     }
                   </View>
                );
              }}
             />
+            
+            </View>
           ) 
           }
+          
           </View>
     ); 
 }
