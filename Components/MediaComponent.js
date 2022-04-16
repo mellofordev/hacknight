@@ -6,7 +6,7 @@ export default function MediaComponent(){
     const [Data,setData]=React.useState([]);
     const [loading,setLoading]=React.useState(true);
     const apiRequest=()=>{
-    fetch('https://api.twitter.com/2/tweets/search/all?query=images&expansions=attachments.media_keys&media.fields=url',{
+    fetch('https://api.twitter.com/2/tweets/search/recent?query=tiktok&expansions=attachments.media_keys&media.fields=url',{
         method:'GET',
         headers:{
         
@@ -16,6 +16,7 @@ export default function MediaComponent(){
     })
     .then(response=>response.json())
     .then(data=>{
+        console.log(data.data);
         setData(data.includes.media);
         setLoading(false);
     })
@@ -36,7 +37,7 @@ export default function MediaComponent(){
                    <View style={{flexDirection:'column'}} > 
                     <Text>{item.item.type}</Text>
                      
-                    {item.item.type!="video" &&  <Image source={{uri:item.item.url}} style={{height:550,width:550}}/>}
+                    {item.item.type!="video" &&  <Image source={{uri:item.item.url}} style={{height:550,width:350,resizeMode:'contain'}}/>}
                   </View>
                );
              }}
