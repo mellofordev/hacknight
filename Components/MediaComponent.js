@@ -1,11 +1,12 @@
 import React,{ useEffect } from 'react';
-import {StyleSheet, Text, View,ActivityIndicator,TextInput,Image,FlatList,Dimensions,TouchableOpacity,Divider} from 'react-native';
+import {StyleSheet, Text, View,ActivityIndicator,TextInput,Image,FlatList,Dimensions,TouchableOpacity,RefreshControl} from 'react-native';
 import env from '../env'
 export default function MediaComponent(){
     const bearerToken = env.btoken.toString();
     const [Data,setData]=React.useState([]);
     const [loading,setLoading]=React.useState(true);
     const [text,setText]=React.useState('elonmusk');
+    const [refresh,setRefresh]=React.useState(false);
     const width_ =Dimensions.get('window').width;
     const apiRequest=()=>{
     fetch(`https://api.twitter.com/2/tweets/search/recent?query=${text}&expansions=attachments.media_keys&media.fields=url&max_results=100`,{
@@ -26,7 +27,19 @@ export default function MediaComponent(){
     }
     useEffect(()=>{
     apiRequest();
-    },[text])   
+    },[text])
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+     }
+    const _refresh_ = React.useCallback(()=>{
+        setRefresh(true);
+        wait(2000).then(()=>{
+            setRefresh(false);
+            
+        })
+        apiRequest();
+    },[])
+   
     return(
         <View style={styles.container}>
         <View style={{marginBottom:5,width:width_}}>
@@ -44,6 +57,12 @@ export default function MediaComponent(){
                 </View>
                  );
              }}
+             refreshControl={
+                 <RefreshControl enabled={true}
+                 refreshing={refresh}
+                 onRefresh={_refresh_}
+                 />
+             }
              renderItem={(item)=>{
               
                return(
