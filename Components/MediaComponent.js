@@ -45,9 +45,10 @@ export default function MediaComponent(){
     return(
         <View style={styles.container}>
         <SafeAreaView>
-        <View style={{marginBottom:5,width:width_}}>
-            <TextInput placeholder='search topic...' onChangeText={(text)=>{setText(text)}} style={{height:50,width:'100%',backgroundColor:'#D3D3D3',borderRadius:15,marginLeft:5,marginRight:5}}/>
-            <View>
+        <Text style={{marginLeft:18,marginBottom:6,fontSize:24,fontWeight:'bold',fontFamily:'Roboto'}}>justTwitterImages</Text>    
+        <View style={{marginBottom:15,width:width_}}>
+            <TextInput placeholder='   search topic...' onChangeText={(text)=>{setText(text)}} style={{height:50,backgroundColor:'#D3D3D3',borderRadius:15,marginRight:10,marginLeft:10}}/>
+        <View>
         <ScrollView horizontal={true} style={{margin:5}}>
               
                {suggest_obj.map((i)=>{
@@ -111,9 +112,9 @@ const styles = StyleSheet.create({
 
     },
     suggestedText:{
-        fontSize:18,
+        fontSize:24,
         borderColor:'black',
-        borderRadius:15,
+        borderRadius:10,
         borderWidth:StyleSheet.hairlineWidth,
         width:100,
         marginEnd:15,
