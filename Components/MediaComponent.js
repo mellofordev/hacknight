@@ -1,5 +1,5 @@
 import React,{ useEffect } from 'react';
-import {StyleSheet, Text, View,ActivityIndicator,TextInput,Image,FlatList,Dimensions,TouchableOpacity,RefreshControl} from 'react-native';
+import {StyleSheet, Text, View,ActivityIndicator,TextInput,Image,FlatList,Dimensions,TouchableOpacity,RefreshControl,ScrollView,SafeAreaView} from 'react-native';
 import env from '../env'
 export default function MediaComponent(){
     const bearerToken = env.btoken.toString();
@@ -8,7 +8,9 @@ export default function MediaComponent(){
     const [text,setText]=React.useState('elonmusk');
     const [refresh,setRefresh]=React.useState(false);
     const width_ =Dimensions.get('window').width;
+    const suggest_obj=[{name:'memes'},{name:'quotes'},{name:'trends'},{name:'motivation'},{name:'images'},{name:'instagram'}]
     const apiRequest=()=>{
+    setLoading(true);
     fetch(`https://api.twitter.com/2/tweets/search/recent?query=${text}&expansions=attachments.media_keys&media.fields=url&max_results=100`,{
         method:'GET',
         headers:{
@@ -42,9 +44,21 @@ export default function MediaComponent(){
    
     return(
         <View style={styles.container}>
+        <SafeAreaView>
         <View style={{marginBottom:5,width:width_}}>
             <TextInput placeholder='search topic...' onChangeText={(text)=>{setText(text)}} style={{height:50,width:'100%',backgroundColor:'#D3D3D3',borderRadius:15,marginLeft:5,marginRight:5}}/>
-        </View>    
+            <View>
+        <ScrollView horizontal={true} style={{margin:5}}>
+              
+               {suggest_obj.map((i)=>{
+                   return(
+                   <TouchableOpacity  style={styles.suggestedText} onPress={()=>{setText(i.name);}}><Text>{i.name}</Text></TouchableOpacity>
+                   );
+               })}
+        </ScrollView>
+        </View>
+        </View>   
+         
          {loading==true ? <ActivityIndicator color={'black'} /> :(
              <View>
             <FlatList 
@@ -83,18 +97,29 @@ export default function MediaComponent(){
             </View>
           ) 
           }
-          
+          </SafeAreaView>   
           </View>
     ); 
 }
 
 const styles = StyleSheet.create({
     container:{
-        marginTop:50,
+        marginTop:90,
         flexDirection:'column',
         margin:5,
        
 
+    },
+    suggestedText:{
+        fontSize:18,
+        borderColor:'black',
+        borderRadius:15,
+        borderWidth:StyleSheet.hairlineWidth,
+        width:100,
+        marginEnd:15,
+        height:'100%',
+        textAlign:'center',
+        
     }
 })
 
